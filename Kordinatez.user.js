@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Kordinatez
 // @namespace    https://vectaria.io/
-// @version      1.1
+// @version      1.2
 // @description  Real-time coordinate copier for Vectaria.io with configurable rounding and formats (Array, Object, JSON, plain, labeled)
 // @author       PIllagerJ88
 // @match        https://vectaria.io/*
@@ -19,7 +19,7 @@
   if (window.__KORDINATEZ_INITIALIZED__) return;
   window.__KORDINATEZ_INITIALIZED__ = true;
 
-  console.log("[Kordinatez] Userscript v1.1 loaded.");
+  console.log("[Kordinatez] Userscript v1.2 loaded.");
 
   //PERSISTENT SETTINGS IN LOCALSTORAGE
   const STORAGE_KEY = 'kordinatez_settings_v1';
@@ -255,7 +255,6 @@
           border: 1px solid var(--v3d-border);
           align-items: center;
           gap: 6px;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
         }
         #kord-toggle-btn:hover {
           background: var(--v3d-panel-2);
@@ -273,7 +272,6 @@
           background: var(--v3d-bg);
           border: 1px solid var(--v3d-border);
           border-radius: 3px;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
           color: var(--v3d-text);
           overflow: hidden;
         }
@@ -410,7 +408,6 @@
           border-color: var(--v3d-accent);
           color: #fff;
           font-weight: 600;
-          box-shadow: 0 2px 8px rgba(54, 146, 231, 0.25);
         }
         .kord-btn-primary:hover {
           background: var(--v3d-accent-hover);
@@ -634,7 +631,7 @@
         </div>
 
         <div id="kord-footer">
-          <span>Kordinatez v1.1</span>
+          <span>Kordinatez v1.2</span>
           <span>by PIllagerJ88</span>
         </div>
       </div>
