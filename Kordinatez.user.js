@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name         Kordinatez
 // @namespace    https://vectaria.io/
-// @version      1.0
+// @version      1.1
 // @description  Real-time coordinate copier for Vectaria.io with configurable rounding and formats (Array, Object, JSON, plain, labeled)
 // @author       PIllagerJ88
 // @match        https://vectaria.io/*
 // @match        https://*.vectaria.io/*
 // @icon         https://vectaria.io/favicon.ico
+// @updateURL    https://raw.githubusercontent.com/CMG-works/Kordinatez/main/Kordinatez.user.js
+// @downloadURL  https://raw.githubusercontent.com/CMG-works/Kordinatez/main/Kordinatez.user.js
 // @grant        none
 // @run-at       document-idle
 // ==/UserScript==
@@ -17,7 +19,7 @@
   if (window.__KORDINATEZ_INITIALIZED__) return;
   window.__KORDINATEZ_INITIALIZED__ = true;
 
-  console.log("[Kordinatez] Userscript v1.0 loaded.");
+  console.log("[Kordinatez] Userscript v1.1 loaded.");
 
   //PERSISTENT SETTINGS IN LOCALSTORAGE
   const STORAGE_KEY = 'kordinatez_settings_v1';
@@ -632,7 +634,7 @@
         </div>
 
         <div id="kord-footer">
-          <span>Kordinatez v1.0</span>
+          <span>Kordinatez v1.1</span>
           <span>by PIllagerJ88</span>
         </div>
       </div>
