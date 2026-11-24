@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Kordinatez
 // @namespace    https://vectaria.io/
-// @version      1.2
+// @version      1.3
 // @description  Real-time coordinate copier for Vectaria.io with configurable rounding and formats (Array, Object, JSON, plain, labeled)
 // @author       PIllagerJ88
 // @match        https://vectaria.io/*
@@ -19,7 +19,7 @@
   if (window.__KORDINATEZ_INITIALIZED__) return;
   window.__KORDINATEZ_INITIALIZED__ = true;
 
-  console.log("[Kordinatez] Userscript v1.2 loaded.");
+  console.log("[Kordinatez] Userscript v1.3 loaded.");
 
   //PERSISTENT SETTINGS IN LOCALSTORAGE
   const STORAGE_KEY = 'kordinatez_settings_v1';
@@ -631,7 +631,7 @@
         </div>
 
         <div id="kord-footer">
-          <span>Kordinatez v1.2</span>
+          <span>Kordinatez v1.3</span>
           <span>by PIllagerJ88</span>
         </div>
       </div>
@@ -704,20 +704,13 @@
       saveSettings(settings);
     });
 
-    toggleBtn.addEventListener('click', () => {
-      winEl.style.display = 'block';
-      toggleBtn.style.display = 'none';
-      settings.minimized = false;
-      saveSettings(settings);
-    });
-
-    // WINDOW DRAGGING
     let isDragging = false;
+    let hasMoved = false;
     let startX, startY, initLeft, initTop;
 
-    header.addEventListener('mousedown', (e) => {
-      if (e.target.id === 'kord-btn-minimize') return;
+    function startDrag(e) {
       isDragging = true;
+      hasMoved = false;
       startX = e.clientX;
       startY = e.clientY;
       const rect = container.getBoundingClientRect();
@@ -725,12 +718,37 @@
       initTop = rect.top;
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
+    }
+
+    header.addEventListener('mousedown', (e) => {
+      if (e.target.id === 'kord-btn-minimize' || e.target.closest('#kord-btn-minimize')) return;
+      startDrag(e);
+    });
+
+    toggleBtn.addEventListener('mousedown', (e) => {
+      startDrag(e);
+    });
+
+    toggleBtn.addEventListener('click', (e) => {
+      if (hasMoved) return;
+      winEl.style.display = 'block';
+      toggleBtn.style.display = 'none';
+      settings.minimized = false;
+      saveSettings(settings);
     });
 
     function onMouseMove(e) {
       if (!isDragging) return;
-      const newLeft = Math.max(10, Math.min(window.innerWidth - 300, initLeft + (e.clientX - startX)));
-      const newTop = Math.max(10, Math.min(window.innerHeight - 300, initTop + (e.clientY - startY)));
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+        hasMoved = true;
+      }
+      const rect = container.getBoundingClientRect();
+      const maxLeft = Math.max(0, window.innerWidth - rect.width);
+      const maxTop = Math.max(0, window.innerHeight - rect.height);
+      const newLeft = Math.max(0, Math.min(maxLeft, initLeft + dx));
+      const newTop = Math.max(0, Math.min(maxTop, initTop + dy));
       container.style.right = 'auto';
       container.style.left = `${newLeft}px`;
       container.style.top = `${newTop}px`;
@@ -839,7 +857,7 @@
         return;
       }
 
-      // alt + K: show / hide the Kordinatez window
+      // alt + K: show/hide the Kordinatez window
       if (e.altKey && (e.code === 'KeyK' || e.key.toLowerCase() === 'k')) {
         e.preventDefault();
         if (winEl.style.display === 'none') {
